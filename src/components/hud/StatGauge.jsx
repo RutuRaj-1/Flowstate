@@ -14,23 +14,22 @@ export const StatGauge = () => {
   const epPercent = Math.min(100, Math.max(0, (ep / maxEp) * 100));
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl p-5 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col gap-4">
+    <div className="water-card rounded-2xl p-4 md:p-5 flex flex-col justify-between gap-3 h-full">
       {/* HP (Health Points) */}
       <div>
-        <div className="flex justify-between items-center mb-1">
-          <div className="flex items-center gap-1.5 text-rose-400 font-bold text-xs uppercase tracking-wider">
-            <Heart size={14} className="animate-pulse" />
+        <div className="flex justify-between items-center mb-1 text-xs">
+          <div className="flex items-center gap-1.5 font-bold text-rose-500">
+            <Heart size={13} className="animate-pulse" />
             <span>Health (HP)</span>
           </div>
-          <span className="text-xs font-mono font-bold text-slate-200">{hp} / {maxHp}</span>
+          <span className="font-mono font-bold text-[var(--fs-text-primary)] text-xs">{hp} / {maxHp}</span>
         </div>
-        <div className="h-2.5 bg-slate-950/80 border border-slate-800 rounded-full overflow-hidden p-0.5 shadow-inner">
+        <div className="h-2 bg-[var(--fs-surface-raised)] border border-[var(--fs-border)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 ease-out"
             style={{
               width: `${hpPercent}%`,
               background: 'linear-gradient(90deg, #F43F5E, #E11D48)',
-              boxShadow: '0 0 8px rgba(244, 63, 94, 0.5)'
             }}
           />
         </div>
@@ -38,20 +37,19 @@ export const StatGauge = () => {
 
       {/* FP (Focus Points) */}
       <div>
-        <div className="flex justify-between items-center mb-1">
-          <div className="flex items-center gap-1.5 text-teal-400 font-bold text-xs uppercase tracking-wider">
-            <Activity size={14} />
+        <div className="flex justify-between items-center mb-1 text-xs">
+          <div className="flex items-center gap-1.5 font-bold text-water-600 dark:text-water-400">
+            <Activity size={13} />
             <span>Focus (FP)</span>
           </div>
-          <span className="text-xs font-mono font-bold text-slate-200">{fp} / {maxFp}</span>
+          <span className="font-mono font-bold text-[var(--fs-text-primary)] text-xs">{fp} / {maxFp}</span>
         </div>
-        <div className="h-2.5 bg-slate-950/80 border border-slate-800 rounded-full overflow-hidden p-0.5 shadow-inner">
+        <div className="h-2 bg-[var(--fs-surface-raised)] border border-[var(--fs-border)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 ease-out"
             style={{
               width: `${fpPercent}%`,
-              background: 'linear-gradient(90deg, #14B8A6, #0D9488)',
-              boxShadow: '0 0 8px rgba(20, 184, 166, 0.5)'
+              background: 'linear-gradient(90deg, #075B9A, #5BBEDB)',
             }}
           />
         </div>
@@ -59,20 +57,19 @@ export const StatGauge = () => {
 
       {/* EP (Energy Points) */}
       <div>
-        <div className="flex justify-between items-center mb-1">
-          <div className="flex items-center gap-1.5 text-amber-400 font-bold text-xs uppercase tracking-wider">
-            <Zap size={14} />
+        <div className="flex justify-between items-center mb-1 text-xs">
+          <div className="flex items-center gap-1.5 font-bold text-amber-500">
+            <Zap size={13} />
             <span>Energy (EP)</span>
           </div>
-          <span className="text-xs font-mono font-bold text-slate-200">{ep} / {maxEp}</span>
+          <span className="font-mono font-bold text-[var(--fs-text-primary)] text-xs">{ep} / {maxEp}</span>
         </div>
-        <div className="h-2.5 bg-slate-950/80 border border-slate-800 rounded-full overflow-hidden p-0.5 shadow-inner">
+        <div className="h-2 bg-[var(--fs-surface-raised)] border border-[var(--fs-border)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 ease-out"
             style={{
               width: `${epPercent}%`,
               background: 'linear-gradient(90deg, #F59E0B, #D97706)',
-              boxShadow: '0 0 8px rgba(245, 158, 11, 0.5)'
             }}
           />
         </div>

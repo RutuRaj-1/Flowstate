@@ -94,6 +94,25 @@ export const TaskProvider = ({ children }) => {
     }
   }, [tasks]);
 
+  const carryForwardTask = useCallback(async (taskId, targetDateStr = null) => {
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return { success: false, error: 'Task not found' };
+    const newDueDate = targetDateStr || new Date().toISOString().split('T')[0];
+    const updates = {
+      dueDate: newDueDate,
+      originalDueDate: task.originalDueDate || task.dueDate,
+      rolloverCount: (task.rolloverCount || 0) + 1,
+      carriedForwardAt: new Date().toISOString(),
+    };
+    try {
+      await tasksService.updateTask(taskId, updates);
+      setTasks(prev => prev.map(t => t.id === taskId ? { ...t, ...updates } : t));
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }, [tasks]);
+
   const getTodayTasks = useCallback(() => {
     const today = new Date().toISOString().split('T')[0];
     return tasks.filter(task => {
@@ -127,10 +146,10 @@ export const TaskProvider = ({ children }) => {
 
   const value = useMemo(() => ({
     tasks, loading,
-    addTask, updateTask, deleteTask, toggleTask,
+    addTask, updateTask, deleteTask, toggleTask, carryForwardTask,
     getTodayTasks, getTasksByDate, getCompletedToday, getMissedTasks,
     getCompletionPercentage, refreshTasks: loadTasks,
-  }), [tasks, loading, addTask, updateTask, deleteTask, toggleTask,
+  }), [tasks, loading, addTask, updateTask, deleteTask, toggleTask, carryForwardTask,
     getTodayTasks, getTasksByDate, getCompletedToday, getMissedTasks,
     getCompletionPercentage, loadTasks]);
 

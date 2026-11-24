@@ -1,32 +1,36 @@
-import React, { useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  LayoutDashboard, CheckSquare, BarChart3, Bot, Settings,
-  Target, Calendar, LogOut, Menu, X, BookOpen, Flame
+  LayoutDashboard, Calendar, CheckSquare, BarChart3, Bot, Settings,
+  Target, LogOut, Menu, X, BookOpen, Droplets, Sun, Moon
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useTasks } from '../../hooks/useTasks';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Sidebar = memo(() => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { user, logout } = useAuth();
   const { tasks } = useTasks();
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
 
-  const pendingCount = tasks.filter(t => !t.completed).length;
+  const todayStr = new Date().toISOString().split('T')[0];
+  const pendingCount = tasks.filter(t => !t.completed && (t.dueDate ? t.dueDate.split('T')[0] <= todayStr : true)).length;
   const displayName = user?.displayName || 'Adventurer';
   const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
   const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const formattedDate = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
   const navigationItems = [
-    { id: 'dashboard', label: 'Quest Board', icon: LayoutDashboard, path: '/dashboard' },
-    { id: 'tasks', label: 'Quest Logs', icon: CheckSquare, path: '/tasks', badge: pendingCount > 0 ? String(pendingCount) : null },
-    { id: 'goals', label: 'Campaigns', icon: Target, path: '/goals' },
+    { id: 'dashboard', label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
+    { id: 'tasks', label: 'Schedule & Tasks', icon: Calendar, path: '/tasks', badge: pendingCount > 0 ? String(pendingCount) : null },
+    { id: 'habits', label: 'Habit Matrix', icon: CheckSquare, path: '/habits' },
+    { id: 'goals', label: 'Goal Pyramid', icon: Target, path: '/goals' },
     { id: 'analysis', label: 'Codex Notes', icon: BookOpen, path: '/analysis' },
-    { id: 'analytics', label: 'Character Stats', icon: BarChart3, path: '/analytics' },
-    { id: 'ai-assistant', label: 'AI Game Master', icon: Bot, path: '/ai-assistant', badge: 'GM' },
+    { id: 'analytics', label: 'Analytics & Radar', icon: BarChart3, path: '/analytics' },
+    { id: 'ai-assistant', label: 'AI Coach', icon: Bot, path: '/ai-assistant', badge: 'AI' },
     { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
   ];
 
@@ -39,51 +43,55 @@ const Sidebar = memo(() => {
 
   return (
     <>
-      {/* Mobile hamburger — visible only on small screens */}
+      {/* Mobile hamburger trigger */}
       <button
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-30 p-2 bg-slate-900 rounded-xl shadow-md border border-slate-800"
+        className="lg:hidden fixed top-4 left-4 z-40 p-2.5 bg-ocean-900 text-white rounded-xl shadow-lg border border-ocean-700/60"
         aria-label="Open menu"
       >
-        <Menu className="w-5 h-5 text-slate-300" />
+        <Menu className="w-5 h-5 text-water-300" />
       </button>
 
       {/* Mobile overlay backdrop */}
       {isMobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-30"
+          className="lg:hidden fixed inset-0 bg-ocean-950/70 backdrop-blur-sm z-40"
           onClick={closeMobile}
         />
       )}
 
-      {/* Sidebar — fixed position, always w-64 on desktop */}
+      {/* Sidebar — fixed position with Deep Ocean #1D3A60 surface */}
       <aside className={`
-        fixed top-0 left-0 bottom-0 z-40
-        w-64 bg-slate-950/90 border-r border-slate-900
-        flex flex-col backdrop-blur-md
-        transition-transform duration-300 ease-in-out
+        fixed top-0 left-0 bottom-0 z-50
+        w-64 bg-ocean-900 text-white border-r border-ocean-950/40
+        flex flex-col shadow-2xl transition-transform duration-300 ease-in-out
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        {/* Logo header */}
-        <div className="flex items-center justify-between h-16 px-5 border-b border-slate-900 flex-shrink-0">
+        {/* Brand header */}
+        <div className="flex items-center justify-between h-16 px-5 border-b border-ocean-800/60 flex-shrink-0 bg-ocean-950/20">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.4)]">
-              <Flame className="w-4 h-4 text-white" />
+            <div className="w-9 h-9 bg-gradient-to-br from-ocean-700 to-water-500 rounded-xl flex items-center justify-center shadow-md shadow-water-500/20">
+              <Droplets className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-black text-slate-100 tracking-wider uppercase font-mono rpg-neon-text">
-              flowstate
-            </span>
+            <div>
+              <span className="text-base font-extrabold tracking-tight text-white block leading-none">
+                flowstate
+              </span>
+              <span className="text-[10px] text-water-300 font-medium tracking-wider uppercase">
+                Execution OS
+              </span>
+            </div>
           </div>
           <button
             onClick={closeMobile}
-            className="lg:hidden p-1 rounded-lg hover:bg-slate-900"
+            className="lg:hidden p-1.5 rounded-lg hover:bg-ocean-800 text-slate-300"
             aria-label="Close menu"
           >
-            <X className="w-5 h-5 text-slate-400" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Navigation links */}
+        {/* Navigation list */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto no-scrollbar">
           {navigationItems.map((item) => {
             const Icon = item.icon;
@@ -93,22 +101,22 @@ const Sidebar = memo(() => {
                 to={item.path}
                 onClick={closeMobile}
                 className={({ isActive }) => `
-                  flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs uppercase font-extrabold font-mono tracking-wider
-                  transition-all duration-150 border border-transparent
+                  flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-wide
+                  transition-all duration-200 border
                   ${isActive
-                    ? 'bg-indigo-950/40 text-indigo-400 border-slate-800 shadow-[0_0_10px_rgba(99,102,241,0.1)]'
-                    : 'text-slate-400 hover:bg-slate-900/40 hover:text-slate-200'
+                    ? 'bg-ocean-800 text-white border-water-500/30 shadow-md shadow-ocean-950/40'
+                    : 'text-mist-200/80 hover:bg-ocean-800/50 hover:text-white border-transparent'
                   }
                 `}
               >
-                <Icon className="w-[16px] h-[16px] flex-shrink-0" />
-                <span className="flex-1">{item.label}</span>
+                <Icon className="w-4 h-4 flex-shrink-0 text-water-300" />
+                <span className="flex-1 font-medium">{item.label}</span>
                 {item.badge && (
-                  <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md leading-none ${
-                    item.badge === 'GM'
-                      ? 'bg-violet-950/60 text-violet-400 border border-violet-800/30'
-                      : 'bg-indigo-950/60 text-indigo-400 border border-indigo-800/30'
-                    }`}>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md leading-none ${
+                    item.badge === 'AI'
+                      ? 'bg-water-500 text-ocean-950 font-black'
+                      : 'bg-ocean-700 text-water-300'
+                  }`}>
                     {item.badge}
                   </span>
                 )}
@@ -117,33 +125,60 @@ const Sidebar = memo(() => {
           })}
         </nav>
 
-        {/* Date widget */}
-        <div className="px-4 py-3 border-t border-slate-900 flex-shrink-0">
-          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-900/40 border border-slate-800/60 rounded-xl">
-            <Calendar className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-            <div className="min-w-0">
-              <p className="text-[9px] text-slate-500 uppercase tracking-widest font-mono">Today's Cycle</p>
-              <p className="text-xs font-bold text-slate-300 truncate font-mono">{formattedDate}</p>
-            </div>
+        {/* Date & Theme toggle strip */}
+        <div className="px-4 py-3 border-t border-ocean-800/60 bg-ocean-950/20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-water-300" />
+            <span className="text-xs font-medium text-mist-100">{formattedDate}</span>
           </div>
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-lg bg-ocean-800 hover:bg-ocean-700 text-water-300 transition-colors"
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-water-300" />}
+          </button>
         </div>
 
-        {/* User section */}
-        <div className="border-t border-slate-900 p-3 flex-shrink-0 bg-slate-950/40">
-          <div className="flex items-center gap-3 px-2">
+        {/* Desktop Adaptation Controls (Electron / Mini Mode) */}
+        {window.electronAPI?.isElectron && (
+          <div className="px-4 py-2 border-t border-ocean-800/60 bg-ocean-950/40 flex items-center justify-between text-xs">
+            <span className="text-[10px] uppercase tracking-wider text-water-300 font-semibold">Desktop Mode</span>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => window.electronAPI?.toggleMiniMode?.()}
+                className="px-2 py-0.5 rounded bg-ocean-800 hover:bg-ocean-700 text-[10px] text-water-200 transition-colors border border-ocean-700"
+                title="Toggle Mini Mode (380x600 dock)"
+              >
+                Mini
+              </button>
+              <button
+                onClick={() => window.electronAPI?.toggleWallpaperMode?.()}
+                className="px-2 py-0.5 rounded bg-ocean-800 hover:bg-ocean-700 text-[10px] text-water-200 transition-colors border border-ocean-700"
+                title="Toggle Wallpaper Mode"
+              >
+                Desk
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* User profile & sign-out */}
+        <div className="border-t border-ocean-800/60 p-3 flex-shrink-0 bg-ocean-950/40">
+          <div className="flex items-center gap-3 px-1">
             <div className="relative flex-shrink-0">
-              <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xs font-black shadow-[0_0_10px_rgba(99,102,241,0.25)]">
+              <div className="w-9 h-9 bg-gradient-to-br from-ocean-700 to-water-500 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-sm">
                 {initials}
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-950 rounded-full" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 border-2 border-ocean-900 rounded-full" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-slate-300 truncate tracking-tight">{displayName}</p>
-              <p className="text-[10px] text-slate-500 truncate font-mono">{user?.email}</p>
+              <p className="text-xs font-bold text-white truncate">{displayName}</p>
+              <p className="text-[10px] text-water-300/70 truncate">{user?.email}</p>
             </div>
             <button
               onClick={handleLogout}
-              className="p-1.5 rounded-lg hover:bg-slate-900 text-slate-400 hover:text-rose-400 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-lg hover:bg-ocean-800 text-mist-200/70 hover:text-rose-300 transition-colors flex-shrink-0"
               title="Sign out"
             >
               <LogOut className="w-4 h-4" />

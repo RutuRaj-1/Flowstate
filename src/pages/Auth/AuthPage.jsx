@@ -245,48 +245,48 @@ const AuthPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex">
 
       {/* Left Panel - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 via-indigo-800 to-violet-900 p-12 flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0d1f36] via-[#1D3A60] to-[#075B9A] p-12 flex-col justify-between relative overflow-hidden">
 
         {/* Abstract Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-0 -left-4 w-72 h-72 bg-[#5BBEDB] rounded-full mix-blend-screen filter blur-2xl animate-blob"></div>
+          <div className="absolute top-0 -right-4 w-72 h-72 bg-[#9BDDEB] rounded-full mix-blend-screen filter blur-2xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#075B9A] rounded-full mix-blend-screen filter blur-2xl animate-blob animation-delay-4000"></div>
         </div>
 
         {/* Content */}
         <div className="relative z-10">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <Target className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20">
+              <Target className="w-6 h-6 text-[#9BDDEB]" />
             </div>
-            <span className="text-white text-xl font-light tracking-wider">flowstate</span>
+            <span className="text-white text-xl font-light tracking-wider">FLOWSTATE</span>
           </div>
 
           {/* Main Message */}
           <div className="mt-16">
             <h1 className="text-5xl font-light text-white leading-tight">
               Master your
-              <span className="block font-medium text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-300">
-                productivity flow
+              <span className="block font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#9BDDEB] to-[#5BBEDB]">
+                execution flow
               </span>
             </h1>
-            <p className="mt-6 text-lg text-indigo-200 font-light max-w-md">
-              Join thousands of professionals who've transformed their workflow with intelligent task management and deep focus sessions.
+            <p className="mt-6 text-lg text-slate-200 font-light max-w-md">
+              A water-inspired Execution OS connecting daily tasks, weekly habits, and strategic cycles into uninterrupted momentum.
             </p>
           </div>
 
           {/* Feature List */}
           <div className="mt-12 space-y-4">
             {[
-              { icon: Zap, text: 'AI-powered task prioritization' },
-              { icon: Star, text: 'Smart focus sessions' },
-              { icon: Shield, text: 'Enterprise-grade security' }
+              { icon: Zap, text: 'Telemetry-driven task prioritization' },
+              { icon: Star, text: 'Calm water Pomodoro & carry-forward' },
+              { icon: Shield, text: 'Private data & offline resilience' }
             ].map((feature, index) => (
-              <div key={index} className="flex items-center gap-3 text-indigo-200">
+              <div key={index} className="flex items-center gap-3 text-slate-200">
                 <div className="p-1 bg-white/10 rounded-lg">
-                  <feature.icon className="w-4 h-4" />
+                  <feature.icon className="w-4 h-4 text-[#9BDDEB]" />
                 </div>
                 <span className="text-sm">{feature.text}</span>
               </div>
@@ -295,8 +295,8 @@ const AuthPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="relative z-10 text-indigo-300 text-xs">
-          © 2024 flowstate. All rights reserved.
+        <div className="relative z-10 text-slate-300 text-xs">
+          © 2026 FlowState. Water-Inspired Execution OS.
         </div>
       </div>
 

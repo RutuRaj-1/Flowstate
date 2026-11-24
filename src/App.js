@@ -115,6 +115,18 @@ function App() {
                             </PrivateRoute>
                           } />
 
+                          <Route path="/schedule" element={
+                            <PrivateRoute>
+                              <Tasks initialTab="day" />
+                            </PrivateRoute>
+                          } />
+
+                          <Route path="/habits" element={
+                            <PrivateRoute>
+                              <Tasks initialTab="habits" />
+                            </PrivateRoute>
+                          } />
+
                           <Route path="/analytics" element={
                             <PrivateRoute>
                               <Analytics />

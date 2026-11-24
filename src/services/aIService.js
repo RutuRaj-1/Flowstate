@@ -1,6 +1,12 @@
 import { appConfig } from '../config/appConfig';
 
-const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY || appConfig?.gemini?.apiKey || '';
+const getApiKey = () => {
+  return process.env.REACT_APP_GEMINI_API_KEY ||
+    (typeof window !== 'undefined' && window.localStorage?.getItem('gemini_api_key')) ||
+    appConfig?.gemini?.apiKey ||
+    '';
+};
+
 const GEMINI_MODEL = 'gemini-2.0-flash';
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -93,7 +99,8 @@ const callGemini = async (userMessage, context) => {
   }
   lastCallTime = Date.now();
 
-  const url = `${API_BASE}/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const apiKey = getApiKey();
+  const url = `${API_BASE}/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
 
   const payload = {
     contents: [
@@ -190,7 +197,8 @@ export const aiService = {
     const context = buildContext(taskData);
 
     // Try Gemini if key is available
-    if (GEMINI_API_KEY && GEMINI_API_KEY.length > 10) {
+    const apiKey = getApiKey();
+    if (apiKey && apiKey.length > 10) {
       try {
         const response = await callGemini(message, context);
         return {

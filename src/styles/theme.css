@@ -1,68 +1,140 @@
-/* Dark Mode Theme */
-.dark {
-  --neutral-50: #0f172a;
-  --neutral-100: #1e293b;
-  --neutral-200: #334155;
-  --neutral-300: #475569;
-  --neutral-400: #64748b;
-  --neutral-500: #94a3b8;
-  --neutral-600: #cbd5e1;
-  --neutral-700: #e2e8f0;
-  --neutral-800: #f1f5f9;
-  --neutral-900: #f8fafc;
+/* FlowState Water-Inspired Design Tokens & Themes */
+
+:root {
+  /* Brand Blues - 4 Band System */
+  --fs-ocean-950: #102B49;
+  --fs-ocean-900: #1D3A60; /* Deep Ocean */
+  --fs-ocean-800: #075B9A; /* Ocean Blue */
+  --fs-ocean-700: #0877B8;
+  --fs-water-500: #5BBEDB; /* Clear Water */
+  --fs-water-300: #9BDDEB; /* Mist Aqua */
+
+  /* Light Surfaces */
+  --fs-bg: #F5FBFD;
+  --fs-surface: #FFFFFF;
+  --fs-surface-raised: #EAF6FA;
+  --fs-surface-subtle: #D8EEF4;
+  --fs-seafoam-100: #E7F4F1;
+
+  /* Typography / Text Colors */
+  --fs-text-primary: #142B40;
+  --fs-text-secondary: #536B7E;
+  --fs-text-muted: #7890A1;
+  --fs-text-on-dark: #F5FBFF;
+
+  /* Borders & Semantic States */
+  --fs-border: #D5E4EB;
+  --fs-border-strong: #A9C5D3;
+  --fs-border-focus: #075B9A;
+  --fs-success: #23856D;
+  --fs-warning: #C58A2A;
+  --fs-danger: #C4515B;
+  --fs-info: #1686B8;
+
+  /* Shadow & Glow */
+  --fs-shadow-soft: 0 8px 24px rgba(16, 43, 73, 0.07);
+  --fs-shadow-pop: 0 14px 36px rgba(16, 43, 73, 0.13);
+  --fs-shadow-glow: rgba(91, 190, 219, 0.25);
+
+  /* Archetype Accent Defaults */
+  --theme-primary: #075B9A;
+  --theme-primary-glow: rgba(7, 91, 154, 0.35);
+  --theme-shadow-glow: rgba(7, 91, 154, 0.15);
 }
 
-/* Print styles */
-@media print {
-  .no-print {
-    display: none !important;
-  }
+/* Dark Theme - Deep Blue Night (not pitch black) */
+.dark, [data-theme="dark"] {
+  --fs-bg: #0B1724;
+  --fs-surface: #12263A;
+  --fs-surface-raised: #18334D;
+  --fs-surface-subtle: #1F4263;
+  --fs-seafoam-100: #14353B;
+
+  --fs-text-primary: #EAF5FB;
+  --fs-text-secondary: #A9C1D1;
+  --fs-text-muted: #7F9BAD;
+  --fs-text-on-dark: #FFFFFF;
+
+  --fs-border: #24435C;
+  --fs-border-strong: #366082;
+  --fs-border-focus: #5BBEDB;
+  --fs-success: #34D399;
+  --fs-warning: #FBBF24;
+  --fs-danger: #F87171;
+  --fs-info: #38BDF8;
+
+  --fs-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --fs-shadow-pop: 0 14px 36px rgba(0, 0, 0, 0.6);
+  --fs-shadow-glow: rgba(91, 190, 219, 0.2);
+
+  --theme-primary: #5BBEDB;
+  --theme-primary-glow: rgba(91, 190, 219, 0.35);
+  --theme-shadow-glow: rgba(91, 190, 219, 0.15);
 }
 
-/* Focus styles */
+/* Archetype Identity Theme Overrides */
+body.theme-vanguard-crimson {
+  --theme-primary: #EF4444;
+  --theme-primary-glow: rgba(239, 68, 68, 0.3);
+  --theme-shadow-glow: rgba(239, 68, 68, 0.15);
+}
+
+body.theme-strategist-teal {
+  --theme-primary: #0D9488;
+  --theme-primary-glow: rgba(13, 148, 136, 0.3);
+  --theme-shadow-glow: rgba(13, 148, 136, 0.15);
+}
+
+body.theme-guardian-gold {
+  --theme-primary: #D97706;
+  --theme-primary-glow: rgba(217, 119, 6, 0.3);
+  --theme-shadow-glow: rgba(217, 119, 6, 0.15);
+}
+
+body.theme-executor-purple {
+  --theme-primary: #9333EA;
+  --theme-primary-glow: rgba(147, 51, 234, 0.3);
+  --theme-shadow-glow: rgba(147, 51, 234, 0.15);
+}
+
+/* Water Flow Background Mesh */
+.water-flow-bg {
+  background-color: var(--fs-bg);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(91, 190, 219, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(7, 91, 154, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(155, 221, 235, 0.06) 0px, transparent 50%);
+}
+
+.dark .water-flow-bg, [data-theme="dark"] .water-flow-bg {
+  background-color: var(--fs-bg);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(91, 190, 219, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(7, 91, 154, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(16, 43, 73, 0.3) 0px, transparent 60%);
+}
+
+/* Water Ripple & Glassmorphism Utility */
+.water-card {
+  background: var(--fs-surface);
+  border: 1px solid var(--fs-border);
+  box-shadow: var(--fs-shadow-soft);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.water-card:hover {
+  border-color: var(--fs-border-strong);
+  box-shadow: var(--fs-shadow-pop);
+}
+
+.water-card-active {
+  background: var(--fs-surface);
+  border: 1.5px solid var(--fs-ocean-800);
+  box-shadow: 0 0 15px var(--theme-primary-glow);
+}
+
+/* Focus Ring */
 *:focus-visible {
-  @apply outline-none ring-2 ring-primary-300 ring-offset-2;
-}
-
-/* Loading skeleton animation */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--neutral-200) 0%,
-    var(--neutral-100) 50%,
-    var(--neutral-200) 100%
-  );
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
-}
-
-/* Glass morphism */
-.glass {
-  @apply bg-white/70 backdrop-blur-sm border border-white/20;
-}
-
-/* Text gradients */
-.text-gradient-primary {
-  @apply bg-gradient-to-r from-primary-500 to-ai-500 bg-clip-text text-transparent;
-}
-
-/* Card hover effects */
-.card-hover {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-}
-
-/* Custom checkbox */
-.custom-checkbox {
-  @apply w-4 h-4 rounded border-neutral-300 text-primary-500 
-         focus:ring-primary-300 focus:ring-offset-0
-         transition-colors;
+  outline: 2px solid var(--fs-ocean-800);
+  outline-offset: 2px;
 }

@@ -12,19 +12,21 @@ const Button = ({
   className = '',
   icon: Icon
 }) => {
-  const baseClasses = 'rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center';
+  const baseClasses = 'rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center';
   
   const variants = {
-    primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-300 disabled:bg-primary-200',
-    secondary: 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 focus:ring-neutral-300 disabled:bg-neutral-50',
-    danger: 'bg-error-500 text-white hover:bg-error-600 focus:ring-error-300 disabled:bg-error-200',
-    ghost: 'bg-transparent text-neutral-600 hover:bg-neutral-100 focus:ring-neutral-300 disabled:text-neutral-300',
+    primary: 'bg-ocean-800 text-white hover:bg-ocean-700 focus:ring-water-500 disabled:opacity-50 shadow-sm hover:shadow-md',
+    secondary: 'bg-[var(--fs-surface-raised)] text-[var(--fs-text-primary)] hover:bg-[var(--fs-surface-subtle)] border border-[var(--fs-border)] focus:ring-water-500 disabled:opacity-50',
+    outline: 'bg-transparent text-[var(--fs-text-primary)] hover:bg-[var(--fs-surface-raised)] border border-[var(--fs-border)] focus:ring-water-500 disabled:opacity-50',
+    danger: 'bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-400 disabled:opacity-50',
+    ghost: 'bg-transparent text-[var(--fs-text-secondary)] hover:bg-[var(--fs-surface-raised)] hover:text-[var(--fs-text-primary)] focus:ring-water-500 disabled:opacity-40',
+    water: 'bg-gradient-to-r from-ocean-800 to-ocean-700 text-white hover:from-ocean-700 hover:to-water-600 focus:ring-water-400 shadow-sm hover:shadow-ocean',
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm gap-1.5',
+    sm: 'px-3 py-1.5 text-xs gap-1.5',
     md: 'px-4 py-2 text-sm gap-2',
-    lg: 'px-6 py-3 text-base gap-2',
+    lg: 'px-5 py-2.5 text-base gap-2.5',
   };
 
   return (
@@ -34,8 +36,8 @@ const Button = ({
       disabled={disabled || loading}
       className={`
         ${baseClasses}
-        ${variants[variant]}
-        ${sizes[size]}
+        ${variants[variant] || variants.primary}
+        ${sizes[size] || sizes.md}
         ${fullWidth ? 'w-full' : ''}
         ${loading ? 'cursor-wait opacity-75' : ''}
         ${className}

@@ -90,11 +90,12 @@ const UserSettings = () => {
   const initials = (settings.profile.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
   const accentColors = [
-    { name: 'indigo', class: 'bg-indigo-400', ring: 'ring-indigo-400' },
-    { name: 'emerald', class: 'bg-emerald-400', ring: 'ring-emerald-400' },
-    { name: 'amber', class: 'bg-amber-400', ring: 'ring-amber-400' },
-    { name: 'rose', class: 'bg-rose-400', ring: 'ring-rose-400' },
-    { name: 'violet', class: 'bg-violet-400', ring: 'ring-violet-400' },
+    { name: 'ocean', class: 'bg-[#075B9A]', ring: 'ring-[#075B9A]' },
+    { name: 'water', class: 'bg-[#5BBEDB]', ring: 'ring-[#5BBEDB]' },
+    { name: 'deep', class: 'bg-[#1D3A60]', ring: 'ring-[#1D3A60]' },
+    { name: 'seafoam', class: 'bg-[#23856D]', ring: 'ring-[#23856D]' },
+    { name: 'emerald', class: 'bg-emerald-500', ring: 'ring-emerald-500' },
+    { name: 'amber', class: 'bg-amber-500', ring: 'ring-amber-500' },
   ];
 
   return (
@@ -102,17 +103,17 @@ const UserSettings = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-light text-slate-700">Settings</h1>
-          <p className="text-slate-500 mt-1">Manage your account preferences</p>
+          <h1 className="text-3xl font-light text-slate-800 dark:text-slate-100">Settings</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">Manage execution preferences and system configuration</p>
         </div>
         <div className="flex items-center gap-4">
           {showSaved && (
-            <div className="flex items-center gap-2 text-emerald-600 bg-emerald-50 px-4 py-2 rounded-lg">
-              <Check className="w-4 h-4" /><span className="text-sm">Saved!</span>
+            <div className="flex items-center gap-2 text-seafoam-700 bg-seafoam-50 dark:bg-seafoam-950/40 px-4 py-2 rounded-lg border border-seafoam-200">
+              <Check className="w-4 h-4" /><span className="text-sm font-medium">Saved!</span>
             </div>
           )}
           <button onClick={handleSave} disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl hover:from-indigo-600 hover:to-violet-600 transition-all disabled:opacity-50">
+            className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-ocean-800 to-ocean-600 hover:from-ocean-900 hover:to-ocean-700 text-white rounded-xl transition-all disabled:opacity-50 shadow-sm font-medium text-sm">
             {isSaving ? (
               <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /><span>Saving...</span></>
             ) : (
@@ -129,10 +130,10 @@ const UserSettings = () => {
           <SettingsCard icon={User} title="Profile" color="bg-indigo-50 text-indigo-400">
             <div className="flex flex-col items-center text-center mb-6">
               <div className="relative mb-3">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-white text-2xl font-light">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-ocean-800 to-water-500 flex items-center justify-center text-white text-2xl font-light shadow-md">
                   {initials}
                 </div>
-                <button className="absolute bottom-0 right-0 p-1 bg-white rounded-lg shadow-sm border border-slate-200 hover:border-indigo-300">
+                <button className="absolute bottom-0 right-0 p-1 bg-white rounded-lg shadow-sm border border-slate-200 hover:border-water-400">
                   <Camera className="w-3.5 h-3.5 text-slate-500" />
                 </button>
               </div>
@@ -231,10 +232,10 @@ const UserSettings = () => {
 
 // Reusable Components
 const SettingsCard = ({ icon: Icon, title, color, children }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+  <div className="water-card bg-white dark:bg-ocean-900/90 rounded-2xl p-6 shadow-sm border border-water-200/60 dark:border-ocean-800">
     <div className="flex items-center gap-3 mb-5">
       <div className={`p-2 rounded-xl ${color}`}><Icon className="w-5 h-5" /></div>
-      <h2 className="text-lg font-medium text-slate-700">{title}</h2>
+      <h2 className="text-lg font-medium text-slate-700 dark:text-slate-200">{title}</h2>
     </div>
     <div className="space-y-4">{children}</div>
   </div>
@@ -242,16 +243,16 @@ const SettingsCard = ({ icon: Icon, title, color, children }) => (
 
 const SettingsInput = ({ label, value, onChange, type = 'text', suffix, textarea, placeholder }) => (
   <div>
-    <label className="text-xs text-slate-400 uppercase tracking-wider">{label}</label>
+    <label className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-medium">{label}</label>
     <div className="flex items-center gap-2 mt-1">
       {textarea ? (
         <textarea value={value} onChange={e => onChange(e.target.value)} rows="2" placeholder={placeholder}
-          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-300 focus:bg-white transition-colors resize-none text-sm" />
+          className="w-full px-3 py-2 bg-slate-50 dark:bg-ocean-950/70 border border-water-200 dark:border-ocean-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-water-400 focus:bg-white dark:focus:bg-ocean-900 transition-colors resize-none text-sm text-slate-800 dark:text-slate-100" />
       ) : (
         <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-300 focus:bg-white transition-colors text-sm" />
+          className="w-full px-3 py-2 bg-slate-50 dark:bg-ocean-950/70 border border-water-200 dark:border-ocean-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-water-400 focus:bg-white dark:focus:bg-ocean-900 transition-colors text-sm text-slate-800 dark:text-slate-100" />
       )}
-      {suffix && <span className="text-sm text-slate-500 flex-shrink-0">{suffix}</span>}
+      {suffix && <span className="text-sm text-slate-500 dark:text-slate-400 flex-shrink-0">{suffix}</span>}
     </div>
   </div>
 );
@@ -259,13 +260,13 @@ const SettingsInput = ({ label, value, onChange, type = 'text', suffix, textarea
 const ToggleRow = ({ icon: Icon, label, desc, enabled, onToggle }) => (
   <div className="flex items-center justify-between py-2">
     <div className="flex items-start gap-3">
-      <div className="p-1.5 bg-slate-100 rounded-lg"><Icon className="w-4 h-4 text-slate-500" /></div>
+      <div className="p-1.5 bg-slate-100 dark:bg-ocean-800 rounded-lg"><Icon className="w-4 h-4 text-slate-500 dark:text-slate-400" /></div>
       <div>
-        <p className="text-sm text-slate-700">{label}</p>
+        <p className="text-sm text-slate-700 dark:text-slate-200">{label}</p>
         <p className="text-xs text-slate-400">{desc}</p>
       </div>
     </div>
-    <button onClick={onToggle} className={`relative w-12 h-6 rounded-full transition-colors ${enabled ? 'bg-indigo-400' : 'bg-slate-200'}`}>
+    <button onClick={onToggle} className={`relative w-12 h-6 rounded-full transition-colors ${enabled ? 'bg-ocean-600' : 'bg-slate-200 dark:bg-ocean-800'}`}>
       <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${enabled ? 'translate-x-6' : ''}`} />
     </button>
   </div>

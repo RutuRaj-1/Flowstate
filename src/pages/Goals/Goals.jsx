@@ -22,15 +22,15 @@ const RISK_META = {
 };
 
 const RING_COLORS = {
-    yearly: 'stroke-indigo-500',
-    quarterly: 'stroke-violet-500',
-    monthly: 'stroke-blue-400',
+    yearly: 'stroke-ocean-600 dark:stroke-water-400',
+    quarterly: 'stroke-water-500 dark:stroke-water-400',
+    monthly: 'stroke-mist-400 dark:stroke-mist-300',
 };
 
 const RING_BG = {
-    yearly: 'stroke-indigo-100',
-    quarterly: 'stroke-violet-100',
-    monthly: 'stroke-blue-100',
+    yearly: 'stroke-ocean-100 dark:stroke-ocean-900/60',
+    quarterly: 'stroke-water-100 dark:stroke-ocean-900/60',
+    monthly: 'stroke-mist-100 dark:stroke-ocean-900/60',
 };
 
 // ── Circular Progress Ring ────────────────────────────────────────────────────
@@ -86,8 +86,8 @@ const GoalFormModal = memo(({ onClose, onSave, editGoal, parentGoals, type }) =>
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-                <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-4 flex items-center justify-between">
-                    <h3 className="text-white font-semibold text-lg">
+                <div className="bg-gradient-to-r from-ocean-900 to-ocean-700 px-6 py-4 flex items-center justify-between text-white">
+                    <h3 className="font-semibold text-lg text-white">
                         {editGoal ? 'Edit Goal' : `New ${form.type.charAt(0).toUpperCase() + form.type.slice(1)} Goal`}
                     </h3>
                     <button onClick={onClose} className="text-white/80 hover:text-white">
@@ -201,7 +201,7 @@ const GoalFormModal = memo(({ onClose, onSave, editGoal, parentGoals, type }) =>
                             Cancel
                         </button>
                         <button type="submit"
-                            className="flex-1 px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                            className="flex-1 px-4 py-2 bg-gradient-to-r from-ocean-800 to-ocean-600 text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
                             {editGoal ? 'Save Changes' : 'Create Goal'}
                         </button>
                     </div>
@@ -223,7 +223,7 @@ const GoalCard = memo(({ goal, progressMap, childGoals = [], onEdit, onDelete, a
     const CatIcon = catMeta.icon;
 
     return (
-        <div className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-all hover:shadow-md ${risk === 'danger' ? 'border-red-200' : risk === 'warning' ? 'border-amber-200' : 'border-slate-100'
+        <div className={`water-card rounded-2xl border shadow-sm overflow-hidden transition-all hover:shadow-md ${risk === 'danger' ? 'border-red-200 dark:border-red-800/40' : risk === 'warning' ? 'border-amber-200 dark:border-amber-800/40' : 'border-water-200/50 dark:border-ocean-700/60'
             }`}>
             <div className="p-5">
                 <div className="flex items-start gap-4">
@@ -369,9 +369,9 @@ const GoalPyramidOverview = memo(({ goals, progressMap }) => {
     }, [goals, progressMap]);
 
     const levels = [
-        { label: 'Yearly Goals', goals: yearly, avg: avgProgress(yearly), color: 'from-indigo-500 to-indigo-600' },
-        { label: 'Quarterly Goals', goals: quarterly, avg: avgProgress(quarterly), color: 'from-violet-500 to-violet-600' },
-        { label: 'Monthly Goals', goals: monthly, avg: avgProgress(monthly), color: 'from-blue-400 to-blue-500' },
+        { label: 'Yearly Goals', goals: yearly, avg: avgProgress(yearly), color: 'from-ocean-800 to-ocean-600' },
+        { label: 'Quarterly Goals', goals: quarterly, avg: avgProgress(quarterly), color: 'from-ocean-600 to-water-500' },
+        { label: 'Monthly Goals', goals: monthly, avg: avgProgress(monthly), color: 'from-water-500 to-mist-400' },
     ];
 
     return (
@@ -487,7 +487,7 @@ const Goals = () => {
                 </div>
                 <button
                     onClick={() => openAddForm(activeTab === 'overview' ? 'yearly' : activeTab)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity shadow-md shadow-indigo-200"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-ocean-800 to-ocean-600 text-white rounded-xl text-sm font-medium hover:opacity-95 transition-opacity shadow-md shadow-ocean-800/20"
                 >
                     <Plus size={16} />
                     Add {activeTab === 'overview' ? 'Goal' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Goal
@@ -495,7 +495,7 @@ const Goals = () => {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-1 bg-slate-100 p-1 rounded-xl">
+            <div className="flex gap-1 bg-slate-100 dark:bg-ocean-950/60 p-1 rounded-xl border border-water-200/40 dark:border-ocean-800">
                 {TABS.map(tab => {
                     const Icon = tab.icon;
                     return (
@@ -503,8 +503,8 @@ const Goals = () => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
-                                ? 'bg-white text-indigo-700 shadow-sm'
-                                : 'text-slate-500 hover:text-slate-700'
+                                ? 'bg-white dark:bg-ocean-800 text-ocean-700 dark:text-water-300 shadow-sm border border-water-200/50'
+                                : 'text-slate-500 dark:text-slate-400 hover:text-ocean-700 dark:hover:text-water-200'
                                 }`}
                         >
                             <Icon size={14} />

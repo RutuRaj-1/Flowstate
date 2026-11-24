@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIdentityStore, IDENTITIES } from '../../stores/useIdentityStore';
 import { useAuth } from '../../hooks/useAuth';
-import { Shield, Compass, BookOpen, Flame } from 'lucide-react';
+import { Shield, Compass, BookOpen, Flame, Check } from 'lucide-react';
 
 const ICON_MAP = {
   vanguard: Flame,
@@ -21,13 +21,22 @@ export const IdentitySelector = () => {
   };
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-      <div className="mb-4">
-        <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-widest">Select Daily Archetype</h3>
-        <p className="text-xs text-slate-400">Choose your class to unlock daily passive bonuses and active abilities.</p>
+    <div className="water-card rounded-2xl p-5 md:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+        <div>
+          <h3 className="text-sm font-bold text-ocean-800 dark:text-water-400 uppercase tracking-wider">
+            Execution Archetypes
+          </h3>
+          <p className="text-xs text-[var(--fs-text-secondary)]">
+            Select your active operational persona to unlock specialized passive perks.
+          </p>
+        </div>
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-ocean-100 dark:bg-ocean-900/60 text-ocean-800 dark:text-water-300 w-fit">
+          Active: {currentIdentity.name}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         {Object.values(IDENTITIES).map((identity) => {
           const Icon = ICON_MAP[identity.id];
           const isSelected = currentIdentity.id === identity.id;
@@ -36,55 +45,46 @@ export const IdentitySelector = () => {
             <button
               key={identity.id}
               onClick={() => handleSelect(identity.id)}
-              className={`relative flex flex-col text-left p-4 rounded-xl border transition-all duration-300 overflow-hidden ${
+              className={`relative flex flex-col text-left p-4 rounded-xl border transition-all duration-200 ${
                 isSelected
-                  ? 'bg-slate-800/80 border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.25)]'
-                  : 'bg-slate-950/40 border-slate-800 hover:border-slate-700 hover:bg-slate-900/40'
+                  ? 'bg-ocean-50 dark:bg-ocean-900/40 border-ocean-800 dark:border-water-500 shadow-md ring-2 ring-ocean-800/20 dark:ring-water-500/20'
+                  : 'bg-[var(--fs-surface)] hover:bg-[var(--fs-surface-raised)] border-[var(--fs-border)]'
               }`}
             >
-              {/* Highlight background glow */}
-              {isSelected && (
-                <div
-                  className="absolute inset-0 opacity-10 pointer-events-none"
-                  style={{ backgroundColor: identity.themeColors.primary }}
-                />
-              )}
-
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="p-2 rounded-lg"
-                  style={{
-                    backgroundColor: isSelected ? identity.themeColors.bgGlow : 'rgba(255,255,255,0.05)',
-                    color: identity.themeColors.primary
-                  }}
-                >
-                  <Icon size={18} />
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="p-1.5 rounded-lg"
+                    style={{
+                      backgroundColor: `${identity.themeColors.primary}18`,
+                      color: identity.themeColors.primary
+                    }}
+                  >
+                    <Icon size={16} />
+                  </div>
+                  <h4 className="font-bold text-xs md:text-sm text-[var(--fs-text-primary)]">
+                    {identity.name}
+                  </h4>
                 </div>
-                <div>
-                  <h4 className="font-extrabold text-sm text-slate-100 tracking-tight">{identity.name}</h4>
-                  <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider">
-                    {identity.coachingStyle.replace(/_/g, ' ')}
+                {isSelected && (
+                  <span className="w-5 h-5 rounded-full bg-ocean-800 dark:bg-water-500 text-white dark:text-ocean-950 flex items-center justify-center">
+                    <Check size={12} strokeWidth={3} />
                   </span>
-                </div>
+                )}
               </div>
 
-              <p className="text-[11px] text-slate-400 leading-relaxed mb-3 flex-grow">
+              <p className="text-[11px] text-[var(--fs-text-secondary)] leading-relaxed mb-3 flex-grow line-clamp-2">
                 {identity.description}
               </p>
 
-              <div className="mt-auto pt-2 border-t border-slate-800/80">
-                <span className="text-[9px] uppercase tracking-widest text-indigo-400 font-bold block mb-1">
-                  Passive Perk
+              <div className="mt-auto pt-2 border-t border-[var(--fs-border)]">
+                <span className="text-[9px] uppercase tracking-wider text-ocean-800 dark:text-water-400 font-bold block mb-0.5">
+                  Passive Bonus
                 </span>
-                <p className="text-[10px] text-slate-300 italic leading-snug">
+                <p className="text-[10px] text-[var(--fs-text-primary)] leading-tight">
                   {identity.perks}
                 </p>
               </div>
-
-              {/* Selection indicator dots/corner notches */}
-              {isSelected && (
-                <div className="absolute top-2 right-2 w-2 h-2 rounded-full" style={{ backgroundColor: identity.themeColors.primary }} />
-              )}
             </button>
           );
         })}

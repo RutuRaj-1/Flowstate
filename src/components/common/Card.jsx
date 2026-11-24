@@ -5,14 +5,16 @@ const Card = ({
   className = '',
   padding = true,
   hover = false,
+  active = false,
   ...props 
 }) => {
   return (
     <div
       className={`
-        bg-white rounded-xl border border-neutral-200 shadow-sm
-        ${padding ? 'p-6' : ''}
-        ${hover ? 'hover:shadow-md hover:border-neutral-300 transition-all' : ''}
+        rounded-2xl water-card
+        ${padding ? 'p-5 md:p-6' : ''}
+        ${hover ? 'hover:shadow-pop hover:border-[var(--fs-border-strong)]' : ''}
+        ${active ? 'water-card-active' : ''}
         ${className}
       `}
       {...props}
@@ -29,7 +31,7 @@ export const CardHeader = ({ children, className = '' }) => (
 );
 
 export const CardTitle = ({ children, className = '' }) => (
-  <h3 className={`text-lg font-medium text-neutral-800 ${className}`}>
+  <h3 className={`text-base font-bold text-[var(--fs-text-primary)] tracking-tight ${className}`}>
     {children}
   </h3>
 );
