@@ -115,3 +115,98 @@ img, svg, video { display: block; max-width: 100%; }
 .App {
   min-height: 100vh;
 }
+
+/* ========== AAA RPG GAME HUB COLOR THEMES & GLASSMORPHISM ========== */
+body {
+  background: #090d16;
+  color: #e2e8f0;
+  transition: background 0.5s ease, color 0.3s ease;
+}
+
+/* Base HUD Glows & Elements */
+.rpg-hud-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rpg-hud-card:hover {
+  border-color: var(--theme-primary-glow);
+  box-shadow: 0 0 20px var(--theme-shadow-glow);
+}
+
+/* Interactive Grid Overlay for Wallpaper Mode */
+.game-grid-overlay {
+  background-image: 
+    linear-gradient(rgba(18, 30, 49, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 30, 49, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+}
+
+/* Individual Identity Class Configurations */
+:root {
+  --theme-primary: #0D9488;
+  --theme-primary-glow: rgba(13, 148, 136, 0.3);
+  --theme-shadow-glow: rgba(13, 148, 136, 0.15);
+}
+
+body.theme-vanguard-crimson {
+  --theme-primary: #EF4444;
+  --theme-primary-glow: rgba(239, 68, 68, 0.4);
+  --theme-shadow-glow: rgba(239, 68, 68, 0.2);
+  background: radial-gradient(circle at top right, #240a0a, #090404 80%);
+}
+
+body.theme-strategist-teal {
+  --theme-primary: #0D9488;
+  --theme-primary-glow: rgba(13, 148, 136, 0.4);
+  --theme-shadow-glow: rgba(13, 148, 136, 0.2);
+  background: radial-gradient(circle at top right, #05211e, #030a09 80%);
+}
+
+body.theme-guardian-gold {
+  --theme-primary: #D97706;
+  --theme-primary-glow: rgba(217, 119, 6, 0.4);
+  --theme-shadow-glow: rgba(217, 119, 6, 0.2);
+  background: radial-gradient(circle at top right, #291a05, #080501 80%);
+}
+
+body.theme-executor-purple {
+  --theme-primary: #9333EA;
+  --theme-primary-glow: rgba(147, 51, 234, 0.4);
+  --theme-shadow-glow: rgba(147, 51, 234, 0.2);
+  background: radial-gradient(circle at top right, #1d092d, #06020a 80%);
+}
+
+/* Animated neon text glows */
+.rpg-neon-text {
+  text-shadow: 0 0 10px var(--theme-primary-glow);
+}
+
+/* Futuristic RPG Corner Clips */
+.rpg-corner-notches {
+  position: relative;
+}
+.rpg-corner-notches::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 6px; hieght: 6px;
+  border-top: 2px solid var(--theme-primary);
+  border-left: 2px solid var(--theme-primary);
+}
+.rpg-corner-notches::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 6px; height: 6px;
+  border-bottom: 2px solid var(--theme-primary);
+  border-right: 2px solid var(--theme-primary);
+}

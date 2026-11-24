@@ -4,7 +4,7 @@ import Sidebar from '../components/navigation/Sidebar';
 
 const MainLayout = memo(() => {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#090d16] text-[#e2e8f0]">
       {/* Grid layout: sidebar column + content column */}
       <div className="flex min-h-screen">
         {/* Sidebar — fixed width, does not scroll with content */}
